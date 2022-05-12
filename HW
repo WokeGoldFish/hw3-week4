@@ -1,0 +1,71 @@
+-- 1.
+select first_name, last_name, district
+from address
+left join customer
+on customer.address_id = address.address_id
+where district = 'Texas';
+
+--2.
+select first_name, last_name, amount
+from payment
+left join customer
+on customer.customer_id = payment.customer_id
+where amount > 6.99;
+
+--3.
+SELECT first_name, last_name, email, customer_id
+FROM customer
+WHERE customer_id IN (
+	SELECT customer_id
+	FROM payment
+	GROUP BY customer_id
+	HAVING SUM(amount) > 175
+	ORDER BY SUM(amount) DESC
+);
+
+--4. sub queary???
+select first_name, last_name, district
+from address
+left join customer
+on customer.address_id = address.adress_id
+inner join adress
+on address.city_id = city.city_id
+where city = 'Nepal';
+
+
+--5. 
+SELECT staff_id, COUNT(amount)
+FROM payment
+GROUP BY staff_id
+ORDER BY COUNT(amount) DESC;
+
+
+-- 6. i googled this one 00000
+--SELECT * FROM (
+ --SELECT film_id, title, 
+ --(
+	-- SELECT COUNT(*)
+	-- FROM film_actor 
+	-- Where film_id=f.film_id) number_actors 
+	--FROM film f ) f2
+--WHERE number_actors>9 ORDER BY number_actors
+
+SELECT film_id, 
+COUNT(*) Number_Actors
+FROM film_actor
+GROUP BY film_id
+HAVING COUNT(*) > 0
+ORDER BY COUNT(*) DESC;
+
+
+--7.
+SELECT first_name, last_name, email, customer_id
+FROM customer
+WHERE customer_id IN (
+	SELECT customer_id
+	FROM payment
+	GROUP BY customer_id
+	WHERE amount > 6.99
+);
+
+
